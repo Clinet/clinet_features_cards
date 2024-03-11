@@ -1,9 +1,6 @@
 package cards
 
 import (
-	"math/rand"
-	"strings"
-
 	"github.com/Clinet/clinet_cmds"
 	"github.com/Clinet/clinet_features"
 )

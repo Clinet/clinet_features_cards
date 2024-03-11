@@ -1,0 +1,12 @@
+github.com/Clinet/clinet_cmds v0.0.0-20221210012841-dadccfd56f19 h1:vRdb+FSoe/nH9cV6REk3ZcbuPwXMHU7rZuEqNFf8pc0=
+github.com/Clinet/clinet_cmds v0.0.0-20221210012841-dadccfd56f19/go.mod h1:FjFjNLUWbWupon+yQIj5zmPcchTlnnnBGXwpDiZfRaA=
+github.com/Clinet/clinet_convos v0.0.0-20221115092451-a56298b8a270 h1:NGUPDgYjalc+Htxx04nRSc0txEfvDKG5J/z0NYi1bBE=
+github.com/Clinet/clinet_convos v0.0.0-20221115092451-a56298b8a270/go.mod h1:gt8ExV+OZ2OdtItH2o3OBJnYEenmZFlH3laIRQ3SIhs=
+github.com/Clinet/clinet_features v0.0.0-20221210013248-ee30597ec785 h1:mXcah1bgo247QTZD3UH/NEYEkAAlDaoLU5HYg4uSxgM=
+github.com/Clinet/clinet_features v0.0.0-20221210013248-ee30597ec785/go.mod h1:PAYwzpOTBcoPKhUTL55OPqDb4ax/8izt2InRe2t+pNo=
+github.com/Clinet/clinet_services v0.0.0-20221115093202-3b5bd50f66ca h1:9H7nYpo/cEs9MS5Rq21hf7sE1kau7GoJJeB5Rgkx8Pk=
+github.com/Clinet/clinet_services v0.0.0-20221115093202-3b5bd50f66ca/go.mod h1:OCs+vb6rwUVgN6xUP2+sR8oK7dz62moETKkifW8ACO4=
+github.com/JoshuaDoes/go-wolfram v0.0.0-20181104014914-c99b0fd7d862 h1:ItozwF1a8/letoSOaWpM+OhF8gs3U6GsNii7RL7i9Ok=
+github.com/JoshuaDoes/go-wolfram v0.0.0-20181104014914-c99b0fd7d862/go.mod h1:Lqk5bQShPry7mxpbuZK1trcUGY6gZPbZmJFhFokMIaM=
+github.com/JoshuaDoes/json v0.0.0-20200726213358-ec3860544ac0 h1:315Zb0n+8KwZyUiIKbDGvfrQ003c0XfHYNy0M4vv5cA=
+github.com/JoshuaDoes/json v0.0.0-20200726213358-ec3860544ac0/go.mod h1:vsCdx75bni6k6GIQPPima8KiM7ZjNHeBJ8keBaJOADA=

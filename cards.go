@@ -79,9 +79,13 @@ func DeleteCardsFromStorageUser(storage *storage.Storage, user, model string, co
 		return 0
 	}
 
-	for i := 0; i < len(toDelete); i++ {
-		toRemove := toDelete[i]-1
-		srcCards = append(srcCards[:toRemove], srcCards[toRemove+1:]...)
+	if len(srcCards) == len(toDelete) {
+		srcCards = make([]string, 0)
+	} else {
+		for i := 0; i < len(toDelete); i++ {
+			toRemove := toDelete[i]-1
+			srcCards = append(srcCards[:toRemove], srcCards[toRemove+1:]...)
+		}
 	}
 
 	storage.UserSet(user, "deck", srcCards)

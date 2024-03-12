@@ -410,7 +410,7 @@ func cmdTear(ctx *cmds.CmdCtx) *cmds.CmdResp {
 	}
 
 	userID := ctx.Server.ServerID
-	if user != nil {
+	if user.UserID != "" {
 		if !isAdmin(ctx) {
 			return cmds.NewCmdRespEmbed("Error!", "You must be an administrator to tear someone else's card!")
 		}
@@ -435,7 +435,7 @@ func cmdTear(ctx *cmds.CmdCtx) *cmds.CmdResp {
 	if count > 1 {
 		plural = "those cards"
 	}
-	return cmds.NewCmdRespEmbed("Tear", fmt.Sprintf("You tore those cards up permanently!", plural))
+	return cmds.NewCmdRespEmbed("Tear", fmt.Sprintf("You tore %s up permanently!", plural))
 }
 
 func cmdRequest(ctx *cmds.CmdCtx) *cmds.CmdResp {

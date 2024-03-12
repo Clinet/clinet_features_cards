@@ -59,7 +59,7 @@ func GetCardsFromStorageUser(storage *storage.Storage, user string) []string {
 }
 
 //DeleteCardsFromStorageUser deletes all instances of a card model from a storage's user deck
-func DeleteCardsFromStorageUser(storage *storage.Storage, user, model string) {
+func DeleteCardsFromStorageUser(storage *storage.Storage, user, model string) int {
 	srcCards := GetCardsFromStorageUser(storage, user)
 	if len(srcCards) == 0 {
 		return
@@ -72,12 +72,17 @@ func DeleteCardsFromStorageUser(storage *storage.Storage, user, model string) {
 		}
 	}
 
+	if len(toDelete) <= 0 {
+		return 0
+	}
+
 	for i := 0; i < len(toDelete); i++ {
 		toRemove := toDelete[i]-1
 		srcCards = append(srcCards[:toRemove], srcCards[toRemove+1:]...)
 	}
 
 	storage.UserSet(user, "deck", srcCards)
+	return len(toDelete)
 }
 
 //GetCardsFromStorageServer returns a list of cards from a storage's server

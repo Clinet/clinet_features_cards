@@ -51,6 +51,7 @@ var Feature = features.Feature{
 				cmds.NewCmdArg("model", "Model of the card to tear", "").SetRequired(),
 				cmds.NewCmdArg("count", "How many to tear", 1),
 				cmds.NewCmdArg("user", "Who to tear the card from (default: you)", cmds.ArgTypeUser),
+				cmds.NewCmdArg("confirm", "Tears the card permanently", false).SetRequired(),
 			),
 			cmds.NewCmd("view", "Renders the specified card", cmdView).AddArgs(
 				cmds.NewCmdArg("model", "Model of the card to render", "").SetRequired(),
@@ -317,6 +318,10 @@ func cmdGive(ctx *cmds.CmdCtx) *cmds.CmdResp {
 	count := ctx.GetArg("count").GetInt()
 	op := ctx.GetArg("op").GetBool()
 
+	if count < 1 {
+		return cmds.NewCmdRespEmbed("Error!", "You must specify one or more cards!")
+	}
+
 	if op && isAdmin(ctx) {
 		srcCards := GetCardsFromStorageServer(Storage, ctx.Server.ServerID)
 		found := false
@@ -379,7 +384,58 @@ func cmdGive(ctx *cmds.CmdCtx) *cmds.CmdResp {
 }
 
 func cmdTear(ctx *cmds.CmdCtx) *cmds.CmdResp {
-	return cmds.NewCmdRespEmbed("Tear", PLACEHOLDER)
+	model := ctx.GetArg("model").GetString()
+	count := ctx.GetArg("count").GetInt()
+	user := ctx.GetArg("user").GetUser()
+	confirm := ctx.GetArg("confirm").GetBool()
+
+	if count < 1 {
+		return cmds.NewCmdRespEmbed("Error!", "You must specify one or more cards!")
+	}
+
+	cards := GetCardsFromStorageServer(Storage, ctx.Server.ServerID)
+	if len(cards) == 0 {
+		return cmds.NewCmdRespEmbed("Error!", "You don't have any cards to tear yet!")
+	}
+
+	index := -1
+	for i := 0; i < len(cards); i++ {
+		if cards[i].Model == model {
+			index = i
+			break
+		}
+	}
+	if index <= -1 {
+		return cmds.NewCmdRespEmbed("Error!", "The card model you specified was not found!")
+	}
+
+	userID := ctx.Server.ServerID
+	if user != nil {
+		if !isAdmin(ctx) {
+			return cmds.NewCmdRespEmbed("Error!", "You must be an administrator to tear someone else's card!")
+		}
+		userID += user.ID
+	} else {
+		userID += ctx.User.UserID
+	}
+
+	if !confirm {
+		plural := "it"
+		if count > 1 {
+			plural = "them"
+		}
+		return cmds.NewCmdRespEmbed("Tear", fmt.Sprintf("Are you sure? Add `confirm:True` to the tear command to tear %s for good!", plural))
+	}
+
+	deleted := DeleteCardsFromStorageUser(Storage, userID, model, count)
+	if deleted <= 0 {
+		return cmds.NewCmdRespEmbed("Error!", "There are no cards in this deck to be torn.")
+	}
+	plural := "that card"
+	if count > 1 {
+		plural = "those cards"
+	}
+	return cmds.NewCmdRespEmbed("Tear", fmt.Sprintf("You tore those cards up permanently!", plural))
 }
 
 func cmdRequest(ctx *cmds.CmdCtx) *cmds.CmdResp {

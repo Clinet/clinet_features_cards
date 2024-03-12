@@ -272,7 +272,7 @@ func cmdDelete(ctx *cmds.CmdCtx) *cmds.CmdResp {
 			return false
 		}
 
-		DeleteCardsFromStorageUser(Storage, serverID + userID, model)
+		DeleteCardsFromStorageUser(Storage, serverID + userID, model, -1)
 		return false
 	})
 
@@ -414,7 +414,7 @@ func cmdTear(ctx *cmds.CmdCtx) *cmds.CmdResp {
 		if !isAdmin(ctx) {
 			return cmds.NewCmdRespEmbed("Error!", "You must be an administrator to tear someone else's card!")
 		}
-		userID += user.ID
+		userID += user.UserID
 	} else {
 		userID += ctx.User.UserID
 	}

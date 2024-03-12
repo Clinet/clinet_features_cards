@@ -62,7 +62,7 @@ func GetCardsFromStorageUser(storage *storage.Storage, user string) []string {
 func DeleteCardsFromStorageUser(storage *storage.Storage, user, model string) int {
 	srcCards := GetCardsFromStorageUser(storage, user)
 	if len(srcCards) == 0 {
-		return
+		return 0
 	}
 
 	toDelete := make([]int, 0)

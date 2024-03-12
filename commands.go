@@ -6,6 +6,7 @@ import (
 	"github.com/Clinet/clinet_cmds"
 	"github.com/Clinet/clinet_features"
 	"github.com/Clinet/clinet_services"
+	"github.com/Clinet/clinet_storage"
 )
 
 var PLACEHOLDER = "I'm sorry, the ~~-V-O-I-D-~~ is unable to respond."
@@ -232,7 +233,6 @@ func cmdUpdate(ctx *cmds.CmdCtx) *cmds.CmdResp {
 	return cmds.NewCmdRespEmbed("Error!", "The card model you specified was not found!")
 }
 
-//TODO: Remove from all user decks
 func cmdDelete(ctx *cmds.CmdCtx) *cmds.CmdResp {
 	if !isAdmin(ctx) {
 		return cmds.NewCmdRespEmbed("Operator Denial", "You must be an administrator to use this command!")
@@ -258,6 +258,23 @@ func cmdDelete(ctx *cmds.CmdCtx) *cmds.CmdResp {
 
 	cards = append(cards[:index], cards[index+1:]...)
 	Storage.ServerSet(ctx.Server.ServerID, "cards", cards)
+
+	Storage.ForEachUser(func(key string, val *storage.StorageObject) bool {
+		//TODO: Convert (serverID+userID) to (serverID+":"+userID) for easy splitting, this is horrendous and I made a fatal mistake
+		//Potentially also switch to userID:serverID instead? Or serviceName:userID:serverID? Rewrite the methods to support it, don't make it optional
+		serverID := string(key[:len(ctx.Server.ServerID)])
+		if serverID != ctx.Server.ServerID {
+			return false
+		}
+		userID := string(key[len(serverID):])
+		if userID == "" {
+			return false
+		}
+
+		DeleteCardsFromStorageUser(Storage, serverID + userID, model)
+		return false
+	})
+
 	return cmds.NewCmdRespEmbed("Card deleted!", "It can no longer be viewed, given or traded")
 }
 

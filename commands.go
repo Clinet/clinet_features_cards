@@ -49,9 +49,9 @@ var Feature = features.Feature{
 			),
 			cmds.NewCmd("tear", "Tears one or more cards from one's deck", cmdTear).AddArgs(
 				cmds.NewCmdArg("model", "Model of the card to tear", "").SetRequired(),
+				cmds.NewCmdArg("confirm", "Tears the card permanently", false).SetRequired(),
 				cmds.NewCmdArg("count", "How many to tear", 1),
 				cmds.NewCmdArg("user", "Who to tear the card from (default: you)", cmds.ArgTypeUser),
-				cmds.NewCmdArg("confirm", "Tears the card permanently", false).SetRequired(),
 			),
 			cmds.NewCmd("view", "Renders the specified card", cmdView).AddArgs(
 				cmds.NewCmdArg("model", "Model of the card to render", "").SetRequired(),

@@ -11,7 +11,7 @@ import (
 
 //Paginate returns a 0-indexed page of anything and the page count
 func Paginate[T any](items []T, page, count int) (paged []T, pageCount int) {
-	if page < 0 {
+	if page < 0 || len(items) <= 0 {
 		return
 	}
 	start := page*count

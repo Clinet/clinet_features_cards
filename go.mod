@@ -1,6 +1,6 @@
 module github.com/Clinet/clinet_features_cards
 
-go 1.22.0
+go 1.21.6
 
 require (
 	github.com/Clinet/clinet_cmds v0.0.0-20221210012841-dadccfd56f19
